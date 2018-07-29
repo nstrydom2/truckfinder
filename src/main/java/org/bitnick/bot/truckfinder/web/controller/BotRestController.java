@@ -21,8 +21,11 @@ public class BotRestController {
 		this.webScraper = WebScraper.instanceOf();
 	}
 	
-	@RequestMapping(value = "/getAllTrucks/{zipcode}")
-	public List<Truck> getAllTrucks(@PathVariable("zipcode") String zipcode) throws Exception {
-		return webScraper.getUhaulResults(zipcode);
+	@RequestMapping(value = "/getAllTrucks/{zipcode}/{pickUpDate}/{pickUpTime}/{truckSize}")
+	public List<Truck> getAllTrucks(@PathVariable("zipcode") String zipcode,
+									@PathVariable("pickUpDate") String pickUpDate,
+									@PathVariable("pickUpTime") String pickUpTime,
+									@PathVariable("truckSize") String truckSize) throws Exception {
+		return webScraper.getAllResults(zipcode, pickUpDate, pickUpTime, truckSize);
 	}
 }
