@@ -15,6 +15,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.springframework.stereotype.Component;
 
 public class Driver {
 	public WebDriver driver;
@@ -37,6 +38,8 @@ public class Driver {
 	public void tearDown() {
 		this.driver.quit();
 		this.driver = null;
+		
+		setUp();
 	}
 	
 	public void navigateTo(String targetUrl) throws Exception {

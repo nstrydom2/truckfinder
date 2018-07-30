@@ -10,16 +10,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Component
-@Controller
+@RestController
+@RequestMapping(value = "/")
 public class BotRestController {
-	private WebScraper webScraper;
-	
-	@Autowired
-	public void setWebScraper(WebScraper webScraper) {
-		this.webScraper = WebScraper.instanceOf();
-	}
+	private WebScraper webScraper = WebScraper.instanceOf();
 	
 	@RequestMapping(value = "/getAllTrucks/{zipcode}/{pickUpDate}/{pickUpTime}/{truckSize}")
 	public List<Truck> getAllTrucks(@PathVariable("zipcode") String zipcode,

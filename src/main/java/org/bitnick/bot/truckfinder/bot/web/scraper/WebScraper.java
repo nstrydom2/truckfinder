@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
-@Component
 public class WebScraper {
 	private final Driver driver = Driver.instanceOf();
 	
@@ -41,14 +40,11 @@ public class WebScraper {
 	
 	public List<Truck> getAllResults(String zipcode, String pickUpDate, String pickUpTime, String truckSize) throws Exception {
 		try {
-			String[] arr = pickUpDate.split("/");
+			pickUpDate = String.join("/", pickUpDate.split("-"));
 			
-			List<Truck> results = combineList( 
-					combineList(
-							getUhaulResults(zipcode, pickUpDate, pickUpTime, truckSize), 
-							getPenskeResults(zipcode, pickUpDate, pickUpTime, truckSize)
-							),
-					getBudgetResults(zipcode, arr[2] + "-" + arr[0] + "-" + arr[1], pickUpTime, truckSize)
+			List<Truck> results = combineList(
+					getUhaulResults(zipcode, pickUpDate, pickUpTime, truckSize), 
+					getPenskeResults(zipcode, pickUpDate, pickUpTime, truckSize)
 					);
 					
 			return sortByPrice(results);
@@ -189,8 +185,7 @@ public class WebScraper {
 		WebDriverWait wait = new WebDriverWait(driver.driver, 5);
 		
 		wait.until(visibilityOfElementLocated(By.xpath("//*[@id=\"datepicker-popup-header-pickUpDate\"]")));
-		//driver.getElement("//*[@id=\"pickUpDate\"]").sendKeys(pickUpDate);
-		driver.click("/html/body/div[4]/div[2]/div/div[1]/table/tbody/tr[5]/td[1]/a");
+		driver.click("/html/body/div[4]/div[2]/div/div[1]/table/tbody/tr[5]/td[2]/a");
 		
 		driver.getElement(pickUpTimeXpath).sendKeys(pickUpTime);
 		driver.click(submitButtonXpath);	// xpath is parameter
